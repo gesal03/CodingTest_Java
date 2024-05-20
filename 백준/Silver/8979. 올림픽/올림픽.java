@@ -5,7 +5,6 @@ import java.util.*;
 public class Main {
     private final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     private StringTokenizer st;
-    private final StringBuilder sb = new StringBuilder();
     private class Country implements Comparable<Country> {
         private int name;
         private int gold;
@@ -50,16 +49,15 @@ public class Main {
         Collections.sort(list);
         HashMap<Integer, Integer> rankMap = new HashMap<>();
         int rank = 1;
-        int previousRank = 1;
-        Country previousCountry = null;
+        int currentRank = 1;
 
-        for (Country country : list) {
-            if (previousCountry != null && country.compareTo(previousCountry) != 0) {
-                rank = previousRank + 1;
+        for (int i = 0; i < list.size(); i++) {
+            Country country = list.get(i);
+            if (i > 0 && list.get(i-1).compareTo(country) != 0) {
+                rank = currentRank;
             }
             rankMap.put(country.name, rank);
-            previousCountry = country;
-            previousRank = rank;
+            currentRank++;
         }
 
         System.out.println(rankMap.get(K));
@@ -69,3 +67,4 @@ public class Main {
         new Main().run();
     }
 }
+
